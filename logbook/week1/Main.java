@@ -10,9 +10,10 @@ public class Main {
         // Print "Hello World!" (Original Code)
         System.out.println("Hello World!");
 
-        // Create a Scanner to get user input
+        // Create a Scanner object to get user input
         Scanner scanner = new Scanner(System.in);
 
+        /* -------------------- User Name Input -------------------- */
         // Ask the user for their name
         System.out.print("Enter your name: ");
         String name = scanner.nextLine(); // Store the name in a variable
@@ -20,6 +21,7 @@ public class Main {
         // Print a personalized greeting
         System.out.println("Hello " + name + "!");
 
+        /* -------------------- Rectangle Calculations -------------------- */
         // Ask user to enter the length and height of a rectangle
         System.out.print("Enter the length of the rectangle: ");
         double length = scanner.nextDouble();
@@ -35,6 +37,7 @@ public class Main {
         System.out.println("The perimeter of the rectangle is: " + perimeter);
         System.out.println("The area of the rectangle is: " + area);
 
+        /* -------------------- Averaging Two Numbers -------------------- */
         // Ask the user to enter two numbers for averaging
         System.out.print("Enter the first number: ");
         double num1 = scanner.nextDouble();
@@ -48,6 +51,7 @@ public class Main {
         // Display the result
         System.out.println("The average of " + num1 + " and " + num2 + " is: " + average);
 
+        /* -------------------- Swapping Two Integers -------------------- */
         // Ask the user to enter two integers for swapping
         System.out.print("Enter the first integer: ");
         int firstNum = scanner.nextInt();
@@ -60,7 +64,7 @@ public class Main {
         System.out.println("First number: " + firstNum);
         System.out.println("Second number: " + secondNum);
 
-        // Swap the values
+        // Swap the values using a temporary variable
         int temp = firstNum;
         firstNum = secondNum;
         secondNum = temp;
@@ -70,6 +74,7 @@ public class Main {
         System.out.println("First number: " + firstNum);
         System.out.println("Second number: " + secondNum);
 
+        /* -------------------- Calculate Year of Birth -------------------- */
         // Get the current year
         int currentYear = Year.now().getValue();
 
@@ -83,10 +88,7 @@ public class Main {
         // Display the year of birth
         System.out.println("You were born in the year: " + birthYear);
 
-        // ---------------------------------
-        // New Feature: Calculate Days Old
-        // ---------------------------------
-
+        /* -------------------- Calculate Days Old -------------------- */
         // Ask the user for their full date of birth
         System.out.print("Enter your birth year (YYYY): ");
         int dobYear = scanner.nextInt();
@@ -97,7 +99,7 @@ public class Main {
         System.out.print("Enter your birth day (DD): ");
         int dobDay = scanner.nextInt();
 
-        // Store the user's date of birth
+        // Store the user's date of birth as a LocalDate object
         LocalDate birthDate = LocalDate.of(dobYear, dobMonth, dobDay);
 
         // Get today's date
@@ -108,6 +110,8 @@ public class Main {
 
         // Display the result
         System.out.println("You are approximately " + daysOld + " days old.");
+
+        /* -------------------- Convert Feet to Miles -------------------- */
         // Ask the user to enter the number of feet
         System.out.print("Enter the number of feet: ");
         double feet = scanner.nextDouble(); // Store the feet value
@@ -117,6 +121,8 @@ public class Main {
 
         // Display the result
         System.out.println(feet + " feet is equal to " + miles + " miles.");
+
+        /* -------------------- Interest Calculation -------------------- */
         // Fixed interest rate of 1% (0.01 in decimal)
         final double INTEREST_RATE = 0.01;
 
