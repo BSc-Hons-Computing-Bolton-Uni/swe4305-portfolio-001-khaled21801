@@ -5,7 +5,7 @@ import java.util.Scanner; // Import Scanner to take user input
 public class Main {
     public static void main(String[] args) {
         // Print "Hello World!" (Original Code)
-        System.out.println("Hello World!");
+        System.out.println("Hello W!");
 
         // Create a Scanner to get user input
         Scanner scanner = new Scanner(System.in);
