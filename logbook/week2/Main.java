@@ -95,6 +95,31 @@ public class Main {
 
         // Goodbye message when the user exits
         System.out.println("Thank you for using the multiplication table program. Goodbye!");
+        /* Prompt the user to enter an exam mark */
+        System.out.print("Enter your exam mark (0-100): ");
+        int mark = scanner.nextInt(); // Read user input
+        /* Validate input to ensure it is within the valid range */
+        if (mark < 0 || mark > 100) {
+            System.out.println("Invalid mark! Please enter a value between 0 and 100.");
+        } else {
+            /* Determine the grade based on the mark */
+            char Grade;
+            if (mark >= 90) {
+                Grade = 'A'; // Excellent
+            } else if (mark >= 80) {
+                Grade = 'B'; // Very good
+            } else if (mark >= 70) {
+                Grade = 'C'; // Good
+            } else if (mark >= 60) {
+                Grade = 'D'; // Satisfactory
+            } else if (mark >= 50) {
+                Grade = 'E'; // Pass
+            } else {
+                Grade = 'F'; // Fail
+            }
+            /* Display the grade */
+            System.out.println("Your grade is: " + Grade);
+        }
 
         /* Close the scanner to prevent resource leaks */
         scanner.close();
