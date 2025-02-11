@@ -62,6 +62,18 @@ public class Main {
         for (int i = 0; i <= 9; i++) {
             System.out.println(i); // Print each digit
         }
+        /* Loop from 1 to 12 to print the 7 times table */
+        for (int i = 1; i <= 12; i++) {
+            System.out.println(i + " x 7 = " + (i * 7)); // Print multiplication result
+        }
+        /* Ask the user to enter a number */
+        System.out.print("Enter a number to see its multiplication table: ");
+        int number = scanner.nextInt(); // Store user input
+
+        /* Loop from 1 to 12 to print the multiplication table */
+        for (int i = 1; i <= 12; i++) {
+            System.out.println(i + " x " + number + " = " + (i * number)); // Print result
+        }
         /* Close the scanner to prevent resource leaks */
         scanner.close();
     }
