@@ -120,7 +120,13 @@ public class Main {
             /* Display the grade */
             System.out.println("Your grade is: " + Grade);
         }
-
+        /* Loop from 1 to 10 */
+        for (int i = 1; i <= 10; i++) {
+            /* Check if the number is even */
+            if (i % 2 == 0) {
+                System.out.println(i); // Print the even number
+            }
+        }
         /* Close the scanner to prevent resource leaks */
         scanner.close();
     }
