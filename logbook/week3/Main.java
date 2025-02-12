@@ -54,7 +54,7 @@ public class Main {
             return name;
         }
 
-        // Print method for course details
+        // Print method for course details.
         public void printCourseDetails() {
             System.out.println("Course Code: " + code);
             System.out.println("Course Name: " + name);
