@@ -17,7 +17,7 @@ class Module {
 
     // Enum for Grade
     public enum Grade {
-        A, B, C, D, F;
+        A, B, C, D, F
     }
 
     // Step 8: Convert mark to letter grade
