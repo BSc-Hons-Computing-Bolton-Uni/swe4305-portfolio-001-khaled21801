@@ -6,7 +6,7 @@ import java.util.ArrayList;
 class Product {
     private final int id;
     private final String name;
-    private int quantity;
+    private final int quantity;
 
     // Constructor
     public Product(int id, String name, int quantity) {
@@ -22,19 +22,6 @@ class Product {
 
     public String getName() {
         return name;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    // Set quantity
-    public void setQuantity(int quantity) {
-        if (quantity >= 0) {
-            this.quantity = quantity;
-        } else {
-            System.out.println("Quantity cannot be negative!");
-        }
     }
 
     // Print product details
