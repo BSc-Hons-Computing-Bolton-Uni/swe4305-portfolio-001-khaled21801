@@ -32,7 +32,7 @@ public class MusicStreamingApp {
     private final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        MusicStreamingApp app = new MusicStreamingApp();
+        musicStreamingApp app = new musicStreamingApp();
         app.run();
     }
 
