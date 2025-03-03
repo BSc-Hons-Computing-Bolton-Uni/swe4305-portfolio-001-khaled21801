@@ -40,7 +40,7 @@ public class MusicStreamingApp {
         initializeSongs();
         while (true) {
             System.out.println("\nMusic Streaming Service");
-            System.out.println("1. Add a new song");
+            System.out.println("1. Add A new song");
             System.out.println("2. Remove a song");
             System.out.println("3. Print all songs");
             System.out.println("4. Print songs over a given play count");
