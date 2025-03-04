@@ -50,7 +50,7 @@ public class MusicStreamingApp {
             System.out.println("\nMusic Streaming Service");
             System.out.println("1. Add a new song");
             System.out.println("2. Remove a song");
-            System.out.println("3. Print all songs");
+            System.out.println("3. Print all Songs");
             System.out.println("4. Print songs over a given play count");
             System.out.println("5. Exit");
             System.out.print("Choose an option: ");
