@@ -1,10 +1,8 @@
 package ProjectA.A_Solution;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +12,7 @@ class SongTest {
     private final MusicStreamingApp app; // Declare a MusicStreamingApp instance for testing addSong(), removeSong(), printAllSongs(), and printSongsAbovePlayCount()
 
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-    private final PrintStream originalSystemOut = System.out; // Store original System.out to restore later
+    // Store original System.out to restore later
 
     SongTest(Song song, MusicStreamingApp app) {
         this.song = song;
@@ -128,9 +126,4 @@ class SongTest {
         assertEquals(expectedOutput, outputStreamCaptor.toString(), "The printed output did not match the expected songs.");
     }
 
-    // Restore System.out to its original state after tests
-    @AfterEach
-    void restoreSystemOutStream() {
-        System.setOut(originalSystemOut);
-    }
 }
