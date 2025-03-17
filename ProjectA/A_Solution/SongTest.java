@@ -1,6 +1,5 @@
 package ProjectA.A_Solution;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,23 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SongTest {
 
-    private Song song;
-    private MusicStreamingApp app; // Declare a MusicStreamingApp instance for testing addSong(), removeSong(), printAllSongs(), and printSongsAbovePlayCount()
+    private final Song song;
+    private final MusicStreamingApp app; // Declare a MusicStreamingApp instance for testing addSong(), removeSong(), printAllSongs(), and printSongsAbovePlayCount()
 
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
     private final PrintStream originalSystemOut = System.out; // Store original System.out to restore later
 
-    @BeforeEach
-    void setUp() {
-        // Initialize a Song object before each test
-        song = new Song("Song A", "Artist A", 1000);
-
-        // Initialize the MusicStreamingApp instance before each test
-        app = new MusicStreamingApp();
-
-        // Redirect System.out to capture printed output
-        System.setOut(new PrintStream(outputStreamCaptor));
+    SongTest(Song song, MusicStreamingApp app) {
+        this.song = song;
+        this.app = app;
     }
+
 
     @Test
     void testSongTitle() {
