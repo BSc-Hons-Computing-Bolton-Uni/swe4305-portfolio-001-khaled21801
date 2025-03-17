@@ -30,11 +30,16 @@ class Song {
     public String toString() {
         return "Title: " + title + ", Artist: " + artist + ", Play Count: " + playCount;
     }
+
+    public String getArtist() {
+        return "";
+    }
 }
 
 public class MusicStreamingApp {
     private final List<Song> songs = new ArrayList<>(); // List to store songs in the app
     private final Scanner scanner = new Scanner(System.in); // Scanner object for user input
+    private Song newSong;
 
     // Main method to start the music streaming application
     public static void main(String[] args) {
@@ -61,8 +66,8 @@ public class MusicStreamingApp {
 
             // Switch case to handle different menu options
             switch (choice) {
-                case 1: addSong(); break; // Option 1: Add a new song
-                case 2: removeSong(); break; // Option 2: Remove a song
+                case 1: addSong(newSong); break; // Option 1: Add a new song
+                case 2: removeSong("Song X"); break; // Option 2: Remove a song
                 case 3: printAllSongs(); break; // Option 3: Print all songs
                 case 4: printSongsAbovePlayCount(); break; // Option 4: Print songs above a certain play count
                 case 5:
@@ -90,7 +95,8 @@ public class MusicStreamingApp {
     }
 
     // Method to add a new song to the app
-    private void addSong() {
+    void addSong(Song newSong) {
+        this.newSong = newSong;
         System.out.print("Enter song title: "); // Prompt for song title
         String title = scanner.nextLine(); // Read title
         System.out.print("Enter artist name: "); // Prompt for artist name
@@ -105,7 +111,7 @@ public class MusicStreamingApp {
     }
 
     // Method to remove a song from the app based on title
-    private void removeSong() {
+    void removeSong(String ignoredSongX) {
         System.out.print("Enter song title to remove: "); // Prompt for the song title to be removed
         String title = scanner.nextLine(); // Read the song title
 
@@ -119,7 +125,7 @@ public class MusicStreamingApp {
     }
 
     // Method to print all songs in the app
-    private void printAllSongs() {
+    void printAllSongs() {
         if (songs.isEmpty()) {
             System.out.println("No songs available."); // No songs to display
         } else {
@@ -129,7 +135,7 @@ public class MusicStreamingApp {
     }
 
     // Method to print songs that have a play count greater than a given value
-    private void printSongsAbovePlayCount() {
+    void printSongsAbovePlayCount() {
         System.out.print("Enter minimum play count: "); // Prompt for minimum play count
         int minPlayCount = scanner.nextInt();
         scanner.nextLine(); // Consume newline
@@ -146,5 +152,9 @@ public class MusicStreamingApp {
         if (!found) {
             System.out.println("No songs found with more than " + minPlayCount + " plays.");
         }
+    }
+
+    public List<Object> getSongs() {
+        return List.of();
     }
 }
