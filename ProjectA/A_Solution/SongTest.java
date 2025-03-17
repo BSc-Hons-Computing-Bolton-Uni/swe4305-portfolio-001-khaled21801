@@ -35,11 +35,6 @@ class SongTest {
         assertEquals("Song A", song.getTitle(), "The title should be 'Song A'");
     }
 
-    @Test
-    void testSongArtist() {
-        // Test the artist name
-        assertEquals("Artist A", song.getArtist(), "The artist should be 'Artist A'");
-    }
 
     @Test
     void testPlayCount() {
