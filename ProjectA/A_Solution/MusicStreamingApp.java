@@ -36,6 +36,7 @@ class Song {
     }
 }
 
+@SuppressWarnings("ClassEscapesDefinedScope")
 public class MusicStreamingApp {
     private final List<Song> songs = new ArrayList<>(); // List to store songs in the app
     private final Scanner scanner = new Scanner(System.in); // Scanner object for user input
@@ -154,7 +155,7 @@ public class MusicStreamingApp {
         }
     }
 
-    public List<Object> getSongs() {
+    public List<Song> getSongs() {
         return List.of();
     }
 }

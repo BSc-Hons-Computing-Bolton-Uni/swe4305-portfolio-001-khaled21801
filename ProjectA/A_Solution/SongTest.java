@@ -35,7 +35,6 @@ class SongTest {
         assertEquals("Song A", song.getTitle(), "The title should be 'Song A'");
     }
 
-
     @Test
     void testPlayCount() {
         // Test the getPlayCount() method
@@ -61,7 +60,7 @@ class SongTest {
         assertEquals(1, app.getSongs().size(), "The song should be added to the list.");
 
         // Verify that the song details are correct
-        Song addedSong = (Song) app.getSongs().get(0);
+        Song addedSong = app.getSongs().get(0);
         assertEquals("Song X", addedSong.getTitle(), "The title of the added song should be 'Song X'");
         assertEquals("Artist X", addedSong.getArtist(), "The artist of the added song should be 'Artist X'");
         assertEquals(5000, addedSong.getPlayCount(), "The play count of the added song should be 5000");
@@ -134,5 +133,6 @@ class SongTest {
     @AfterEach
     void restoreSystemOutStream() {
         System.setOut(originalSystemOut);
+        outputStreamCaptor.reset(); // Clear the output stream after each test
     }
 }
