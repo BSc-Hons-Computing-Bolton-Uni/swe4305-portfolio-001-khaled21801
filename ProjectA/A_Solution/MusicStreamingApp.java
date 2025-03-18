@@ -83,16 +83,16 @@ public class MusicStreamingApp {
     // Method to initialize some sample songs for the app
     private void initializeSongs() {
         // Adding some predefined songs to the list
-        songs.add(new Song("Song A", "Artist A", 10000));
-        songs.add(new Song("Song B", "Artist B", 50000));
-        songs.add(new Song("Song C", "Artist C", 120000));
-        songs.add(new Song("Song D", "Artist D", 4500));
-        songs.add(new Song("Song E", "Artist E", 300000));
-        songs.add(new Song("Song F", "Artist F", 80000));
-        songs.add(new Song("Song G", "Artist G", 15000));
-        songs.add(new Song("Song H", "Artist H", 200000));
-        songs.add(new Song("Song I", "Artist I", 75000));
-        songs.add(new Song("Song J", "Artist J", 9000));
+        songs.add(new Song("Song A", "Artist A", 10));
+        songs.add(new Song("Song B", "Artist B", 12));
+        songs.add(new Song("Song C", "Artist C", 13));
+        songs.add(new Song("Song D", "Artist D", 14));
+        songs.add(new Song("Song E", "Artist E", 15));
+        songs.add(new Song("Song F", "Artist F", 16));
+        songs.add(new Song("Song G", "Artist G", 17));
+        songs.add(new Song("Song H", "Artist H", 18));
+        songs.add(new Song("Song I", "Artist I", 19));
+        songs.add(new Song("Song J", "Artist J", 20));
     }
 
     // Method to add a new song to the app
