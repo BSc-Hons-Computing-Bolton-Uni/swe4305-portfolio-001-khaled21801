@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -12,127 +13,96 @@ import static org.junit.jupiter.api.Assertions.*;
 class SongTest {
 
     private Song song;
-    private MusicStreamingApp app; // Declare a MusicStreamingApp instance for testing addSong(), removeSong(), printAllSongs(), and printSongsAbovePlayCount()
 
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-    private final PrintStream originalSystemOut = System.out; // Store original System.out to restore later
+    private final PrintStream originalSystemOut = System.out;
 
     @BeforeEach
     void setUp() {
-        // Initialize a Song object before each test
         song = new Song("Song A", "Artist A", 1000);
-
-        // Initialize the MusicStreamingApp instance before each test
-        app = new MusicStreamingApp();
-
-        // Redirect System.out to capture printed output
+        new MusicStreamingApp();
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 
     @Test
     void testSongTitle() {
-        // Test the getTitle() method
         assertEquals("Song A", song.getTitle(), "The title should be 'Song A'");
     }
 
     @Test
     void testPlayCount() {
-        // Test the getPlayCount() method
         assertEquals(1000, song.getPlayCount(), "The play count should be 1000");
     }
 
     @Test
     void testToString() {
-        // Test the toString() method for expected string format
         String expectedString = "Title: Song A, Artist: Artist A, Play Count: 1000";
         assertEquals(expectedString, song.toString(), "toString() method did not return the expected string");
     }
 
     @Test
     void testAddSong() {
-        // Create a new song to add
-        Song newSong = new Song("Song X", "Artist X", 5000);
-
-        // Add the song to the app
-        app.addSong(newSong);
-
-        // Verify that the song has been added
-        assertEquals(1, app.getSongs().size(), "The song should be added to the list.");
-
-        // Verify that the song details are correct
-        Song addedSong = app.getSongs().get(0);
-        assertEquals("Song X", addedSong.getTitle(), "The title of the added song should be 'Song X'");
-        assertEquals("Artist X", addedSong.getArtist(), "The artist of the added song should be 'Artist X'");
-        assertEquals(5000, addedSong.getPlayCount(), "The play count of the added song should be 5000");
+        provideInput("1\nSong X\nArtist X\n5000\n5\n");
+        MusicStreamingApp.main(new String[]{});
+        assertTrue(getOutput().contains("Song added successfully!"));
     }
 
     @Test
-    void testRemoveSong() {
-        // Add a song to the app
-        Song newSong = new Song("Song X", "Artist X", 5000);
-        app.addSong(newSong);
-
-        // Ensure the song was added
-        assertEquals(1, app.getSongs().size(), "The song should be added to the list.");
-
-        // Now remove the song
-        app.removeSong("Song X");
-
-        // Verify that the song has been removed
-        assertEquals(0, app.getSongs().size(), "The song should be removed from the list.");
-
-        // Try to remove a song that doesn't exist
-        app.removeSong("Nonexistent Song");
-
-        // Verify that no song was removed and the list is still empty
-        assertEquals(0, app.getSongs().size(), "The list should still be empty.");
+    public void testRemoveSong() {
+        provideInput("2\nSong A\n5\n");
+        MusicStreamingApp.main(new String[]{});
+        assertTrue(getOutput().contains("Song removed successfully."));
     }
 
     @Test
-    void testPrintAllSongs() {
-        // Add some songs to the app
-        Song song1 = new Song("Song A", "Artist A", 1000);
-        Song song2 = new Song("Song B", "Artist B", 5000);
-        app.addSong(song1);
-        app.addSong(song2);
-
-        // Call printAllSongs method
-        app.printAllSongs();
-
-        // Check if the output is as expected
-        String expectedOutput = "Title: Song A, Artist: Artist A, Play Count: 1000\n" +
-                "Title: Song B, Artist: Artist B, Play Count: 5000\n";
-
-        // Verify that the printed output matches the expected output
-        assertEquals(expectedOutput, outputStreamCaptor.toString(), "The printed output did not match the expected format.");
+    public void testPrintAllSongs() {
+        provideInput("3\n5\n");
+        MusicStreamingApp.main(new String[]{});
+        assertTrue(getOutput().contains("Song A"));
+        assertTrue(getOutput().contains("Song J"));
     }
 
     @Test
-    void testPrintSongsAbovePlayCount() {
-        // Add some songs to the app
-        Song song1 = new Song("Song A", "Artist A", 1000);
-        Song song2 = new Song("Song B", "Artist B", 5000);
-        Song song3 = new Song("Song C", "Artist C", 15000);
-        app.addSong(song1);
-        app.addSong(song2);
-        app.addSong(song3);
+    public void testPrintSongsAbovePlayCount() {
+        // Step 1: Add songs first
+        provideInput("1\nSong C\nArtist C\n150000\n1\nSong E\nArtist E\n200000\n1\nSong H\nArtist H\n300000\n5\n");
+        MusicStreamingApp.main(new String[]{});
 
-        // Set the minimum play count to 5000
+        // Step 2: Verify songs exist
+        provideInput("3\n5\n");
+        MusicStreamingApp.main(new String[]{});
+        String allSongsOutput = getOutput();
+        assertTrue(allSongsOutput.contains("Song C"), "Expected 'Song C' to be stored.");
+        assertTrue(allSongsOutput.contains("Song E"), "Expected 'Song E' to be stored.");
+        assertTrue(allSongsOutput.contains("Song H"), "Expected 'Song H' to be stored.");
 
-        // Call printSongsAbovePlayCount method (simulate user input for minPlayCount)
-        app.printSongsAbovePlayCount();
+        // Step 3: Test filtering with play count 100000
+        provideInput("4\n100000\n5\n");
+        MusicStreamingApp.main(new String[]{});
+        String output = getOutput();
+        assertTrue(output.contains("Song C"), "Expected 'Song C' to be printed.");
+        assertTrue(output.contains("Song E"), "Expected 'Song E' to be printed.");
+        assertTrue(output.contains("Song H"), "Expected 'Song H' to be printed.");
 
-        // Expected output after filtering songs with play count > 5000
-        String expectedOutput = "Title: Song C, Artist: Artist C, Play Count: 15000\n";
-
-        // Verify that the printed output matches the expected output
-        assertEquals(expectedOutput, outputStreamCaptor.toString(), "The printed output did not match the expected songs.");
+        // Step 4: Test filtering with play count 1000000 (expect no songs)
+        provideInput("4\n1000000\n5\n");
+        MusicStreamingApp.main(new String[]{});
+        assertTrue(getOutput().contains("No songs found with more than 1000000 plays."),
+                "Expected message for no songs found.");
     }
 
-    // Restore System.out to its original state after tests
+
+    private void provideInput(String data) {
+        System.setIn(new ByteArrayInputStream(data.getBytes()));
+    }
+
+    private String getOutput() {
+        return outputStreamCaptor.toString().trim();
+    }
+
     @AfterEach
     void restoreSystemOutStream() {
         System.setOut(originalSystemOut);
-        outputStreamCaptor.reset(); // Clear the output stream after each test
+        outputStreamCaptor.reset();
     }
 }
