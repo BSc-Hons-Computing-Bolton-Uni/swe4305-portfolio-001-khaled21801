@@ -31,12 +31,8 @@ class Song {
         return "Title: " + title + ", Artist: " + artist + ", Play Count: " + playCount;
     }
 
-    public String getArtist() {
-        return "";
-    }
 }
 
-@SuppressWarnings("ClassEscapesDefinedScope")
 public class MusicStreamingApp {
     private final List<Song> songs = new ArrayList<>(); // List to store songs in the app
     private final Scanner scanner = new Scanner(System.in); // Scanner object for user input
@@ -68,7 +64,7 @@ public class MusicStreamingApp {
             // Switch case to handle different menu options
             switch (choice) {
                 case 1: addSong(newSong); break; // Option 1: Add a new song
-                case 2: removeSong("Song X"); break; // Option 2: Remove a song
+                case 2: removeSong(); break; // Option 2: Remove a song
                 case 3: printAllSongs(); break; // Option 3: Print all songs
                 case 4: printSongsAbovePlayCount(); break; // Option 4: Print songs above a certain play count
                 case 5:
@@ -112,7 +108,7 @@ public class MusicStreamingApp {
     }
 
     // Method to remove a song from the app based on title
-    void removeSong(String ignoredSongX) {
+    void removeSong() {
         System.out.print("Enter song title to remove: "); // Prompt for the song title to be removed
         String title = scanner.nextLine(); // Read the song title
 
@@ -155,7 +151,4 @@ public class MusicStreamingApp {
         }
     }
 
-    public List<Song> getSongs() {
-        return List.of();
-    }
 }
