@@ -3,9 +3,9 @@ package logbook.week3;
 import java.util.*;
 
 class Student {
-    private String studentID;
-    private String name;
-    private Map<String, Integer> moduleMarks; // Module code -> Marks
+    private final String studentID;
+    private final String name;
+    private final Map<String, Integer> moduleMarks; // Module code -> Marks
 
     public Student(String studentID, String name) {
         this.studentID = studentID;
@@ -23,9 +23,9 @@ class Student {
 }
 
 class Module {
-    private String moduleCode;
-    private String moduleName;
-    private List<Integer> marks;
+    private final String moduleCode;
+    private final String moduleName;
+    private final List<Integer> marks;
 
     public Module(String moduleCode, String moduleName) {
         this.moduleCode = moduleCode;
@@ -64,9 +64,10 @@ class MarksAndGrades {
     }
 }
 
+@SuppressWarnings("ALL")
 public class Main {
-    private static List<Student> students = new ArrayList<>();
-    private static List<Module> modules = new ArrayList<>();
+    private static final List<Student> students = new ArrayList<>();
+    private static final List<Module> modules = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
