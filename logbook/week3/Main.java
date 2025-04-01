@@ -1,3 +1,5 @@
+package logbook.week3;
+
 import java.util.*;
 
 class Student {
