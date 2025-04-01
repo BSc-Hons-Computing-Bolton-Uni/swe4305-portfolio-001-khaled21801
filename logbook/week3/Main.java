@@ -1,81 +1,130 @@
-package logbook.week3;
+import java.util.*;
+
+class Student {
+    private String studentID;
+    private String name;
+    private Map<String, Integer> moduleMarks; // Module code -> Marks
+
+    public Student(String studentID, String name) {
+        this.studentID = studentID;
+        this.name = name;
+        this.moduleMarks = new HashMap<>();
+    }
+
+    public String getStudentID() { return studentID; }
+    public String getName() { return name; }
+    public Map<String, Integer> getModuleMarks() { return moduleMarks; }
+
+    public void addModuleMark(String moduleCode, int mark) {
+        moduleMarks.put(moduleCode, mark);
+    }
+}
+
+class Module {
+    private String moduleCode;
+    private String moduleName;
+    private List<Integer> marks;
+
+    public Module(String moduleCode, String moduleName) {
+        this.moduleCode = moduleCode;
+        this.moduleName = moduleName;
+        this.marks = new ArrayList<>();
+    }
+
+    public String getModuleCode() { return moduleCode; }
+    public String getModuleName() { return moduleName; }
+    public List<Integer> getMarks() { return marks; }
+
+    public void addMark(int mark) {
+        marks.add(mark);
+    }
+
+    public double calculateMean() {
+        return marks.stream().mapToInt(Integer::intValue).average().orElse(0);
+    }
+
+    public int getMinMark() {
+        return marks.stream().mapToInt(Integer::intValue).min().orElse(0);
+    }
+
+    public int getMaxMark() {
+        return marks.stream().mapToInt(Integer::intValue).max().orElse(0);
+    }
+}
+
+class MarksAndGrades {
+    public static String getGrade(int mark) {
+        if (mark >= 70) return "A First Class";
+        else if (mark >= 60) return "B Upper Second Class";
+        else if (mark >= 50) return "C Lower Second Class";
+        else if (mark >= 40) return "Third Class";
+        else return "F Fail";
+    }
+}
 
 public class Main {
+    private static List<Student> students = new ArrayList<>();
+    private static List<Module> modules = new ArrayList<>();
 
-    // Student class
-    public static class Student {
-        // Declaring the attributes as final (immutable)
-        private final int id;
-        private final String name;
-        private Course course; // Course object (can change if needed)
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("1. Add Student");
+            System.out.println("2. Add Module");
+            System.out.println("3. Assign Marks");
+            System.out.println("4. Display Student Grades");
+            System.out.println("5. Exit");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
-        // Constructor to assign values to id, name
-        public Student(int id, String name) {
-            this.id = id;
-            this.name = name;
-        }
-
-        // Method to enrol in a course
-        public void enrol(Course newCourse) {
-            this.course = newCourse; // Assigning the course to the student
-            System.out.println(name + " has been enrolled in " + newCourse.getName() + " (" + newCourse.getCode() + ")");
-        }
-
-        // Modified print method to print both student and course details
-        public void print() {
-            System.out.println("Student ID: " + id);
-            System.out.println("Student Name: " + name);
-            if (course != null) {
-                course.printCourseDetails(); // Calling course's print method
-            } else {
-                System.out.println("No course assigned.");
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter Student ID: ");
+                    String studentID = scanner.nextLine();
+                    System.out.print("Enter Student Name: ");
+                    String name = scanner.nextLine();
+                    students.add(new Student(studentID, name));
+                    break;
+                case 2:
+                    System.out.print("Enter Module Code: ");
+                    String moduleCode = scanner.nextLine();
+                    System.out.print("Enter Module Name: ");
+                    String moduleName = scanner.nextLine();
+                    modules.add(new Module(moduleCode, moduleName));
+                    break;
+                case 3:
+                    System.out.print("Enter Student ID: ");
+                    studentID = scanner.nextLine();
+                    System.out.print("Enter Module Code: ");
+                    moduleCode = scanner.nextLine();
+                    System.out.print("Enter Mark: ");
+                    int mark = scanner.nextInt();
+                    for (Student s : students) {
+                        if (s.getStudentID().equals(studentID)) {
+                            s.addModuleMark(moduleCode, mark);
+                        }
+                    }
+                    for (Module m : modules) {
+                        if (m.getModuleCode().equals(moduleCode)) {
+                            m.addMark(mark);
+                        }
+                    }
+                    break;
+                case 4:
+                    for (Student s : students) {
+                        System.out.println("Student: " + s.getName());
+                        for (Map.Entry<String, Integer> entry : s.getModuleMarks().entrySet()) {
+                            System.out.println("Module: " + entry.getKey() + ", Mark: " + entry.getValue() + ", Grade: " + MarksAndGrades.getGrade(entry.getValue()));
+                        }
+                    }
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice, try again.");
             }
         }
-    }
-
-    // Course class
-    public static class Course {
-        // Declaring the attributes as final (immutable)
-        private final String code;
-        private final String name;
-
-        // Constructor to initialize course code and name
-        public Course(String code, String name) {
-            this.code = code;
-            this.name = name;
-        }
-
-        // Getters for course details
-        public String getCode() {
-            return code;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        // Print method for course details.
-        public void printCourseDetails() {
-            System.out.println("Course Code: " + code);
-            System.out.println("Course Name: " + name);
-        }
-    }
-
-    // Main method to test Student and Course classes
-    public static void main(String[] args) {
-        // Instantiate the Course class
-        Course course1 = new Course("CS101", "Introduction to Computer Science");
-
-        // Instantiate the Student class
-        Student student1 = new Student(12345678, "khaled");
-
-        // Call the print method to see initial student details
-        student1.print();
-
-        // Enrol the student in the course
-        student1.enrol(course1);
-
-        // Call the print method again to show updated student and course details
-        student1.print();
     }
 }
