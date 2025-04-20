@@ -16,7 +16,7 @@ class ProBTest {
         module = new Module(101, "Mathematics");
     }
 
-    // --- MARK TESTS ---
+    // --- MARK TESTS ----
 
     @Test
     void testValidMarkCreation() {
