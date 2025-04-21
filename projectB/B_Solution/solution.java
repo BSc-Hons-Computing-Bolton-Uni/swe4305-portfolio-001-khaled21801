@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-// Enum for Grade Classification
+// (Enum for Grade Classification)
 enum Grade {
     A("First Class"),
     B("Upper Second Class"),
