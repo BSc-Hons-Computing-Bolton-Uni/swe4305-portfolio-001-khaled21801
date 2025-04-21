@@ -190,7 +190,7 @@ class Solution {
     private static void addStudentToModule() {
         int moduleCode = getIntInput("Enter Module Code: ");
 
-        // Check if the module with this code already exists
+        // Check if . the module with this code already exists
         if (findModuleByCode(moduleCode) != null) {
             System.out.println("Module with this code already exists. Please enter a different module code.");
             return;
