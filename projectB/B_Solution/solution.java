@@ -277,7 +277,7 @@ class Solution {
         }
     }
 
-    // Method to safely get integer input
+    // Method .to safely get integer input
     private static int getIntInput(String prompt) {
         int input;
         while (true) {
