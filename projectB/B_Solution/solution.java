@@ -6,10 +6,10 @@ import java.util.Scanner;
 
 // (Enum for Grade Classification)
 enum Grade {
-    A("First Class"),
-    B("Upper Second Class"),
     C("Lower Second Class"),
     D("Third Class"),
+    A("First Class"),
+    B("Upper Second Class"),
     F("Fail");
 
     private final String classification;
@@ -38,7 +38,6 @@ class Mark {
         return markValue;
     }
 
-    // Method to calculate grade based on predefined range
     public Grade calculateGrade() {
         if (markValue >= 70) {
             return Grade.A;
@@ -81,28 +80,24 @@ class Student {
     public List<Mark> getMarks() {
         return marks;
     }
-
-    public Grade getGradeForModule(int index) {
-        if (index >= 0 && index < marks.size()) {
-            return marks.get(index).calculateGrade();
-        }
-        return null;
-    }
 }
 
-// Class to Represent a Module and Handle Stats
+// Class to Represent a Module
 class Module {
-    private final int moduleCode;
-    private final String moduleName;
-    private final List<Student> students;
+    private String moduleCode;
+    private String moduleName;
+    private List<Student> students;
 
-    public Module(int moduleCode, String moduleName) {
+    public Module(String moduleCode, String moduleName) {
         this.moduleCode = moduleCode;
         this.moduleName = moduleName;
         this.students = new ArrayList<>();
     }
 
-    public int getModuleCode() {
+    public Module(int i, String mathematics) {
+    }
+
+    public String getModuleCode() {
         return moduleCode;
     }
 
@@ -118,7 +113,6 @@ class Module {
         return students;
     }
 
-    // Method to calculate the mean, max, and min marks for the module
     public void calculateStats() {
         double total = 0;
         int count = 0;
@@ -147,13 +141,15 @@ class Module {
     }
 }
 
-// Main Class to Run the Application and Interface with the User
+// Main Class
 class Solution {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Module> modules = new ArrayList<>();
 
     public static void main(String[] args) {
+        initializeModules();
+
         while (true) {
             showMenu();
             int choice = getIntInput("Choose an option: ");
@@ -171,7 +167,8 @@ class Solution {
                     calculateModuleStats();
                     break;
                 case 5:
-                    return; // Exit program
+                    System.out.println("Exiting program...");
+                    return;
                 default:
                     System.out.println("Invalid option. Try again.");
             }
@@ -180,33 +177,48 @@ class Solution {
 
     private static void showMenu() {
         System.out.println("\n=== Student Management System ===");
-        System.out.println("1. Add student to module");
+        System.out.println("1. Add student to existing module");
         System.out.println("2. Update student marks");
         System.out.println("3. Display student grades");
         System.out.println("4. Calculate module stats");
         System.out.println("5. Exit");
     }
 
-    private static void addStudentToModule() {
-        int moduleCode = getIntInput("Enter Module Code: ");
+    private static void initializeModules() {
+        modules.add(new Module("COM4301", "Maths for Computing"));
+        modules.add(new Module("COM4302", "Computer Science Fundamentals"));
+        modules.add(new Module("SWE4303", "Computing Infrastructure"));
+        modules.add(new Module("SWE4304", "Databases"));
+        modules.add(new Module("SWE4305", "Object Oriented Programming"));
+        modules.add(new Module("SWE5306", "Systems Analysis and Design"));
+        modules.add(new Module("SWE5307", "Web Design and Programming"));
+        modules.add(new Module("SWE5308", "Cloud Technologies"));
+        modules.add(new Module("SWE5304", "Advanced Databases and Big Data"));
+        modules.add(new Module("SEC5304", "Advanced Operating Systems"));
+        modules.add(new Module("AIN5301", "Introduction to AI"));
+        modules.add(new Module("COM6300", "Research and Professional Issues"));
+        modules.add(new Module("COM6301", "Undergraduate Project"));
+        modules.add(new Module("AIN6301", "Natural Language Processing"));
+        modules.add(new Module("SEC6302", "Information Security Management"));
+        modules.add(new Module("SEC6305", "Operations Management"));
+        modules.add(new Module("SWE6302", "Applied Machine Learning"));
+        modules.add(new Module("SWE6303", "Software Quality Management"));
+        modules.add(new Module("SWE6304", "Emerging Technologies"));
+    }
 
-        // Check if . the module with this code already exists
-        if (findModuleByCode(moduleCode) != null) {
-            System.out.println("Module with this code already exists. Please enter a different module code.");
+    private static void addStudentToModule() {
+        System.out.print("Enter Module Code (e.g., COM4301): ");
+        String moduleCode = scanner.nextLine().trim().toUpperCase();
+        Module module = findModuleByCode(moduleCode);
+
+        if (module == null) {
+            System.out.println("Module not found.");
             return;
         }
 
-        System.out.print("Enter Module Name: ");
-        String moduleName = scanner.nextLine();
-
-        Module module = new Module(moduleCode, moduleName);
-        modules.add(module);
-
         int studentId = getIntInput("Enter Student ID: ");
-
-        // Check if the student ID already exists
         if (findStudentById(studentId) != null) {
-            System.out.println("Student with this ID already exists. Please enter a different student ID.");
+            System.out.println("Student with this ID already exists.");
             return;
         }
 
@@ -216,11 +228,12 @@ class Solution {
         Student student = new Student(studentId, studentName);
         module.addStudent(student);
 
-        System.out.println("Student added to module: " + moduleName);
+        System.out.println("Student added to module: " + module.getModuleName());
     }
 
     private static void updateMarks() {
-        int moduleCode = getIntInput("Enter Module Code: ");
+        System.out.print("Enter Module Code: ");
+        String moduleCode = scanner.nextLine().trim().toUpperCase();
         Module module = findModuleByCode(moduleCode);
 
         if (module != null) {
@@ -245,7 +258,8 @@ class Solution {
     }
 
     private static void displayGrades() {
-        int moduleCode = getIntInput("Enter Module Code: ");
+        System.out.print("Enter Module Code: ");
+        String moduleCode = scanner.nextLine().trim().toUpperCase();
         Module module = findModuleByCode(moduleCode);
 
         if (module != null) {
@@ -256,7 +270,7 @@ class Solution {
                 System.out.println("Grades for student " + studentId + ":");
                 for (Mark mark : student.getMarks()) {
                     Grade grade = mark.calculateGrade();
-                    System.out.println("Mark: " + mark.getMarkValue() + ", Grade: " + grade);
+                    System.out.println("Mark: " + mark.getMarkValue() + ", Grade: " + grade + " (" + grade.getClassification() + ")");
                 }
             } else {
                 System.out.println("Student not found.");
@@ -267,7 +281,8 @@ class Solution {
     }
 
     private static void calculateModuleStats() {
-        int moduleCode = getIntInput("Enter Module Code: ");
+        System.out.print("Enter Module Code: ");
+        String moduleCode = scanner.nextLine().trim().toUpperCase();
         Module module = findModuleByCode(moduleCode);
 
         if (module != null) {
@@ -277,14 +292,13 @@ class Solution {
         }
     }
 
-    // Method .to safely get integer input
     private static int getIntInput(String prompt) {
         int input;
         while (true) {
             System.out.print(prompt);
             try {
                 input = Integer.parseInt(scanner.nextLine());
-                break; // Exit loop when a valid integer is entered
+                break;
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid integer.");
             }
@@ -292,9 +306,9 @@ class Solution {
         return input;
     }
 
-    private static Module findModuleByCode(int moduleCode) {
+    private static Module findModuleByCode(String moduleCode) {
         for (Module module : modules) {
-            if (moduleCode == module.getModuleCode()) {
+            if (module.getModuleCode().equalsIgnoreCase(moduleCode)) {
                 return module;
             }
         }
@@ -303,7 +317,7 @@ class Solution {
 
     private static Student findStudentById(Module module, int studentId) {
         for (Student student : module.getStudents()) {
-            if (studentId == student.getStudentId()) {
+            if (student.getStudentId() == studentId) {
                 return student;
             }
         }
@@ -313,7 +327,7 @@ class Solution {
     private static Student findStudentById(int studentId) {
         for (Module module : modules) {
             for (Student student : module.getStudents()) {
-                if (studentId == student.getStudentId()) {
+                if (student.getStudentId() == studentId) {
                     return student;
                 }
             }
